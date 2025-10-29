@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LA VIDA LOCA - Bar Grill d'Exception</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link type="image/png" sizes="16x16" rel="icon" href="favicon.png"> 
+    <link type="image/png" sizes="32x32" rel="icon" href="favicon32.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: 0 0% 100%;           /* Blanc pur */
+            --foreground: 45 80% 20%;          /* Or foncé pour texte */
+            --card: 0 0% 98%;                  /* Blanc cassé */
+            --primary: 45 100% 51%;            /* Or vif */
+            --secondary: 45 90% 65%;           /* Or clair */
+            --accent: 45 95% 60%;
+            --border: 45 100% 51%;             /* Bordure or */
+            --radius: 0.75rem;
+            --gradient-gold: linear-gradient(135deg, hsl(45 100% 51%) 0%, hsl(40 95% 45%) 100%);
+            --gradient-overlay: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
+            --shadow-elegant: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-gold: 0 10px 40px -10px hsl(45 100% 51% / 0.3);
+            --shadow-gold-lg: 0 20px 60px -15px hsl(45 100% 51% / 0.4);
+            --transition-elegant: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition-elegant);
+            background-color: hsla(var(--background), 0.95);
+        }
+
+        .navbar.scrolled {
+            background-color: hsla(0, 0%, 100%, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-right: auto;
+            padding-left: 0;
+            margin-left: -4rem;
+        }
+
+        .logo-image {
+            width: 4.5rem;
+            height: 4.5rem;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid hsl(var(--primary));
+            box-shadow: var(--shadow-gold);
+        }
+
+        .brand-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: hsl(var(--primary));
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: hsl(var(--foreground));
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-elegant);
+            opacity: 0.9;
+        }
+
+        .nav-link:hover {
+            opacity: 1;
+            color: hsl(var(--primary));
+        }
+
+        .btn-reserve {
+            background: var(--gradient-gold);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-elegant);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .btn-reserve:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-gold-lg);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: hsl(var(--primary));
+            margin: 3px 0;
+            transition: var(--transition-elegant);
+            border-radius: 2px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: heroZoom 20s ease-in-out infinite alternate;
+        }
+
+        .gradient-overlay {
+            position: absolute;
+            inset: 0;
+            background: transparent;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 1rem;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.5rem, 9vw, 7rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: hsl(var(--primary));
+            text-shadow: 0 0 30px hsla(45, 100%, 51%, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+            color: white;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: white;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-elegant);
+            border: none;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-elegant);
+        }
+
+        .btn-primary {
+            background: var(--gradient-gold);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-gold-lg);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: hsl(var(--primary));
+            border: 2px solid hsl(var(--primary));
+        }
+
+        .btn-outline:hover {
+            background: hsl(var(--primary));
+            color: white;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .mouse {
+            width: 28px;
+            height: 48px;
+            border: 2px solid hsl(var(--primary));
+            border-radius: 16px;
+            position: relative;
+        }
+
+        .wheel {
+            width: 4px;
+            height: 10px;
+            background-color: hsl(var(--primary));
+            border-radius: 2px;
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scroll 2s infinite;
+        }
+
+        /* Sections communes */
+        .section {
+            padding: 7rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 7vw, 4.5rem);
+            margin-bottom: 1rem;
+            color: hsl(var(--primary));
+        }
+
+        .separator {
+            width: 7rem;
+            height: 3px;
+            margin: 1.5rem auto;
+            background: var(--gradient-gold);
+            border-radius: 2px;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .opening-hours {
+            font-style: italic;
+            color: hsl(var(--primary));
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        /* Cartes génériques */
+        .grid-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            justify-content: center;
+        }
+
+        .card {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-elegant);
+            transition: var(--transition-elegant);
+            border: 2px solid hsl(var(--primary));
+            flex: 1 1 300px;
+            background: white;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-gold-lg);
+        }
+
+        .card-image-wrapper {
+            aspect-ratio: 16/9;
+            overflow: hidden;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-elegant);
+        }
+
+        .card:hover .card-image {
+            transform: scale(1.12);
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 0%, hsla(45, 100%, 51%, 0.8) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            opacity: 0;
+            transition: var(--transition-elegant);
+        }
+
+        .card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .card-overlay h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .card-overlay p {
+            color: white;
+            font-size: 1rem;
+        }
+
+        /* Section Grill */
+        .grill {
+            background: linear-gradient(to bottom, hsl(0 0% 98%), white);
+        }
+
+        /* Section Bar */
+        .bar {
+            background: linear-gradient(to bottom, white, hsl(0 0% 97%));
+        }
+
+        /* Section Chambres */
+        .chambres {
+            background-color: hsl(0 0% 98%);
+        }
+
+        .amenities-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border: 2px solid hsl(var(--primary));
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-elegant);
+        }
+
+        .amenities-section, .details-section {
+            flex: 1 1 350px;
+        }
+
+        .amenities-section h3, .details-section h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+            color: hsl(var(--primary));
+        }
+
+        .amenities-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .amenities-section li {
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            position: relative;
+            padding-left: 1.8rem;
+        }
+
+        .amenities-section li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: hsl(var(--primary));
+            font-weight: bold;
+        }
+
+        /* Section Événements & Matchs */
+        .evenements, .matchs {
+            background-color: white;
+        }
+
+        /* CTA Box */
+        .cta-box {
+            background: white;
+            box-shadow: var(--shadow-gold-lg);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 2px solid hsl(var(--primary));
+        }
+
+        .cta-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: hsl(var(--primary));
+        }
+
+        .cta-box p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        /* === GALERIE AMÉLIORÉE === */
+        .gallery {
+            background-color: hsl(0 0% 98%);
+            padding: 7rem 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-elegant);
+            transition: var(--transition-elegant);
+            aspect-ratio: 1 / 1;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-gold-lg);
+            border-color: hsl(var(--primary));
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-elegant);
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.08);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 0%, hsla(45, 100%, 51%, 0.8) 100%);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: var(--transition-elegant);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-caption {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .gallery-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid hsl(var(--primary));
+            color: hsl(var(--primary));
+            padding: 0.6rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-elegant);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--gradient-gold);
+            color: white;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .gallery-load-more {
+            display: block;
+            margin: 3rem auto 0;
+            background: var(--gradient-gold);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-elegant);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .gallery-load-more:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-gold-lg);
+        }
+
+        /* Modal Carousel amélioré */
+        .carousel-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .carousel-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+            height: 80%;
+            background: black;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-item {
+            flex: 0 0 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-item img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-elegant);
+            backdrop-filter: blur(5px);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .carousel-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-prev {
+            left: 20px;
+        }
+
+        .carousel-next {
+            right: 20px;
+        }
+
+        .carousel-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-elegant);
+            backdrop-filter: blur(5px);
+            z-index: 10;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .carousel-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .carousel-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            text-align: center;
+            max-width: 80%;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+        }
+
+        /* === FORMULAIRE AMÉLIORÉ === */
+        .reservation {
+            background: linear-gradient(to bottom, hsl(0 0% 97%), white);
+        }
+
+        .reservation-form {
+            background: white;
+            border: 2px solid hsl(var(--primary));
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-gold);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            position: relative;
+        }
+
+        .form-label input,
+        .form-label select {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: hsl(0 0% 98%);
+            border: 1.5px solid hsl(var(--border));
+            border-radius: var(--radius);
+            font-size: 1rem;
+            color: hsl(var(--foreground));
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-label .icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: hsl(var(--primary));
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .placeholder {
+            position: absolute;
+            left: 3.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            color: hsl(var(--foreground) / 0.7);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            background: white;
+            padding: 0 0.4rem;
+        }
+
+        .form-label input:focus,
+        .form-label select:focus {
+            border-color: hsl(var(--primary));
+            box-shadow: 0 0 0 4px hsla(45, 100%, 51%, 0.15);
+        }
+
+        .form-label input:focus + .placeholder,
+        .form-label input:not(:placeholder-shown) + .placeholder,
+        .form-label select:focus + .placeholder,
+        .form-label select:not([value=""]):valid + .placeholder {
+            top: 0;
+            font-size: 0.85rem;
+            color: hsl(var(--primary));
+            font-weight: 500;
+        }
+
+        /* Bouton WhatsApp */
+        .btn-whatsapp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            width: 100%;
+            padding: 1.1rem 2rem;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition-elegant);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            background: linear-gradient(135deg, #128C7E, #075E54);
+        }
+
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Info boxes */
+        .info-boxes {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .info-box {
+            background: white;
+            border: 2px solid hsl(var(--primary));
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            text-align: center;
+            flex: 1;
+            max-width: 250px;
+            box-shadow: var(--shadow-elegant);
+            transition: var(--transition-elegant);
+        }
+
+        .info-box:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .info-box h3 {
+            color: hsl(var(--primary));
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box p {
+            font-size: 1rem;
+            color: hsl(var(--foreground));
+        }
+
+        .info-box a {
+            color: hsl(var(--primary));
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .info-box a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(to top, hsl(45 100% 51%), hsl(40 95% 45%));
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-column h4 {
+            color: white;
+            font-size: 1.4rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            color: rgba(255,255,255,0.8);
+            border-top: 1px solid rgba(255,255,255,0.3);
+        }
+
+        /* Animations */
+        @keyframes heroZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.12); }
+        }
+
+        @keyframes scroll {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(12px); opacity: 0; }
+        }
+
+        .animate-fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .animate-slide-up {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1.5rem;
+                gap: 1.2rem;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                border: 1px solid hsl(var(--primary));
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 80%;
+                max-width: 300px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Responsive pour la galerie */
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .carousel-container {
+                width: 95%;
+                height: 70%;
+            }
+
+            .carousel-nav {
+                width: 40px;
+                height: 40px;
+            }
+
+            .carousel-prev {
+                left: 10px;
+            }
+
+            .carousel-next {
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <img src="logo.png" alt="LA VIDA LOCA" class="logo-image">
+                <span class="brand-name">LA VIDA LOCA</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">Accueil</a>
+                <a href="#grill" class="nav-link">Grill</a>
+                <a href="#bar" class="nav-link">Bar</a>
+                <a href="#chambres" class="nav-link">Chambres</a>
+                <a href="#evenements" class="nav-link">Événements</a>
+                <a href="#matchs" class="nav-link">Matchs</a>
+                <a href="#gallery" class="nav-link">Galerie</a>
+                <a href="#reservation" class="nav-link"><button class="btn-reserve">Réservation</button></a>
+            </div>
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <img src="1.jpg" alt="LA VIDA LOCA - Ambiance Festive" class="hero-image">
+            <div class="gradient-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <h1>LA VIDA LOCA</h1>
+            <p class="hero-subtitle">Vivez l'Instant, Savourez l'Émotion</p>
+            <p class="hero-description">Bar Grill • Restaurant • Chambres • Matchs en Direct • Événements Privés</p>
+            <div class="hero-buttons">
+                <a href="#reservation" class="btn btn-primary">Réserver Maintenant</a>
+                <a href="#gallery" class="btn btn-outline">Découvrir</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Grill -->
+    <section id="grill" class="section grill">
+        <div class="container">
+            <header class="section-header animate-fade-in">
+                <h2 class="section-title">Grill & Saveurs</h2>
+                <div class="separator"></div>
+                <p class="section-description">Viandes grillées à la perfection, plats généreux, ambiance chaleureuse.</p>
+                <p class="opening-hours">Ouvert 7J/7 de 8h à 23h</p>
+            </header>
+            <div class="grid-flex">
+                <div class="card animate-slide-up">
+                    <div class="card-image-wrapper">
+                        <img src="GRILL1.jpg" alt="Grillades" class="card-image">
+                        <div class="card-overlay">
+                            <h3>Viandes Premium</h3>
+                            <p>Grillées à la perfection</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="card-image-wrapper">
+                        <img src="GRILL2.jpg" alt="Plats" class="card-image">
+                        <div class="card-overlay">
+                            <h3>Plats Signature</h3>
+                            <p>Saveurs uniques</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card animate-slide-up" style="animation-delay: 0.4s;">
+                    <div class="card-image-wrapper">
+                        <img src="GRILL3.jpg" alt="Salades" class="card-image">
+                        <div class="card-overlay">
+                            <h3>Fraîcheur</h3>
+                            <p>Salades & Légumes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Bar -->
+    <section id="bar" class="section bar">
+        <div class="container">
+            <header class="section-header animate-fade-in">
+                <h2 class="section-title">Bar Animé</h2>
+                <div class="separator"></div>
+                <p class="section-description">Cocktails créatifs, bières fraîches, ambiance électrique.</p>
+            </header>
+            <div class="grid-flex">
+                <div class="card animate-slide-up">
+                    <div class="card-image-wrapper">
+                        <img src="BAR1.jpg" alt="Cocktail" class="card-image">
+                        <div class="card-overlay">
+                            <h3>Cocktails</h3>
+                            <p>Créations originales</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="card-image-wrapper">
+                        <img src="BAR2.jpg" alt="Bières" class="card-image">
+                        <div class="card-overlay">
+                            <h3>Bières</h3>
+                            <p>Fraîches & Variées</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card animate-slide-up" style="animation-delay: 0.4s;">
+                    <div class="card-image-wrapper">
+                        <img src="BAR3.jpg" alt="Mocktails" class="card-image">
+                        <div class="card-overlay">
+                            <h3>Mocktails</h3>
+                            <p>Sans alcool</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Chambres -->
+    <section id="chambres" class="section chambres">
+        <div class="container">
+            <header class="section-header animate-fade-in">
+                <h2 class="section-title">Chambres Confort</h2>
+                <div class="separator"></div>
+                <p class="section-description">Reposez-vous dans nos chambres modernes après une soirée animée.</p>
+            </header>
+            <div class="grid-flex">
+                <div class="card animate-slide-up">
+                    <div class="card-image-wrapper">
+                        <img src="CHAMBRES1.jpg" alt="Chambre" class="card-image">
+                    </div>
+                </div>
+                <div class="card animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="card-image-wrapper">
+                        <img src="CHAMBRES2.jpg" alt="Suite" class="card-image">
+                    </div>
+                </div>
+                <div class="card animate-slide-up" style="animation-delay: 0.4s;">
+                    <div class="card-image-wrapper">
+                        <img src="CHAMBRES3.jpg" alt="Vue" class="card-image">
+                    </div>
+                </div>
+            </div>
+            <div class="amenities-details animate-fade-in">
+                <div class="amenities-section">
+                    <h3>Équipements</h3>
+                    <ul>
+                        <li>Lit Queen Size</li>
+                        <li>Salle de bain privée</li>
+                        <li>TV HD</li>
+                        <li>Wifi gratuit</li>
+                        <li>Mini-frigo</li>
+                        <li>Climatisation</li>
+                    </ul>
+                </div>
+                <div class="details-section">
+                    <h3>Confort Absolu</h3>
+                    <p>Chambres spacieuses, décor moderne, literie haut de gamme. Parfait pour un séjour relaxant.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Événements -->
+    <section id="evenements" class="section evenements">
+        <div class="container">
+            <header class="section-header animate-fade-in">
+                <h2 class="section-title">Événements Privés</h2>
+                <div class="separator"></div>
+                <p class="section-description">Anniversaires, mariages, soirées d'entreprise… Nous créons votre moment.</p>
+            </header>
+            <div class="grid-flex">
+                <div class="card animate-slide-up">
+                    <div class="card-image-wrapper">
+                        <img src="EVENT1.jpg" alt="Anniversaire" class="card-image">
+                        <div class="card-overlay">
+                            <h3>Offres St Valentin</h3>
+                            <p>Fête inoubliable</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="card-image-wrapper">
+                        <img src="EVENT2.jpg" alt="Mariage" class="card-image">
+                        <div class="card-overlay">
+                            <h3>Mariages</h3>
+                            <p>Romantisme garanti</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cta-box animate-fade-in">
+                <h3>Réservez Votre Événement</h3>
+                <p>Contactez-nous pour un devis personnalisé</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Matchs -->
+    <section id="matchs" class="section matchs">
+        <div class="container">
+            <header class="section-header animate-fade-in">
+                <h2 class="section-title">Matchs en Direct</h2>
+                <div class="separator"></div>
+                <p class="section-description">Vibrez avec les plus grands matchs sur écrans géants.</p>
+            </header>
+            <div class="grid-flex">
+                <div class="card animate-slide-up">
+                    <div class="card-image-wrapper">
+                        <img src="MATCH1.jpg" alt="Football" class="card-image">
+                        <div class="card-overlay">
+                            <h3>Football</h3>
+                            <p>Ligues & Coupes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="card-image-wrapper">
+                        <img src="MATCH2.jpg" alt="Basket" class="card-image">
+                        <div class="card-overlay">
+                            <h3>Basket</h3>
+                            <p>NBA & Local</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card animate-slide-up" style="animation-delay: 0.4s;">
+                    <div class="card-image-wrapper">
+                        <img src="MATCH3.jpg" alt="Autres" class="card-image">
+                        <div class="card-overlay">
+                            <h3>Autres Sports</h3>
+                            <p>Boxe, Tennis...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Galerie Améliorée -->
+<section id="gallery" class="section gallery">
+    <div class="container">
+        <header class="section-header animate-fade-in">
+            <h2 class="section-title">Galerie</h2>
+            <div class="separator"></div>
+            <p class="section-description">Découvrez l'ambiance, les saveurs et les moments inoubliables de LA VIDA LOCA</p>
+        </header>
+
+        <!-- Filtres de galerie -->
+        <div class="gallery-filters animate-fade-in">
+            <button class="filter-btn active" data-filter="all">Tout</button>
+            <button class="filter-btn" data-filter="grill">Grill</button>
+            <button class="filter-btn" data-filter="bar">Bar</button>
+            <button class="filter-btn" data-filter="chambres">Chambres</button>
+            <button class="filter-btn" data-filter="evenements">Événements</button>
+            <button class="filter-btn" data-filter="matchs">Matchs</button>
+        </div>
+
+        <!-- Grille de galerie -->
+        <div class="gallery-grid">
+            <!-- 6 IMAGES GRILL -->
+            <div class="gallery-item animate-slide-up" data-category="grill" onclick="openCarousel(0)">
+                <img src="GRILL1.jpg" alt="Viandes grillées premium" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Viandes Premium</div>
+                </div>
+            </div>
+            <div class="gallery-item animate-slide-up" data-category="grill" onclick="openCarousel(1)">
+                <img src="GRILL2.jpg" alt="Plats signature grill" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Plats Signature</div>
+                </div>
+            </div>
+            <div class="gallery-item animate-slide-up" data-category="grill" onclick="openCarousel(2)">
+                <img src="GRILL3.jpg" alt="Salades fraîches" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Fraîcheur</div>
+                </div>
+            </div>
+            <div class="gallery-item animate-slide-up" data-category="grill" onclick="openCarousel(3)">
+                <img src="GRILL4.jpg" alt="Spécialités maison grill" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Spécialités Maison</div>
+                </div>
+            </div>
+            <div class="gallery-item animate-slide-up" data-category="grill" onclick="openCarousel(4)">
+                <img src="GRILL5.jpg" alt="Assiettes gourmandes grill" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Assiettes Gourmandes</div>
+                </div>
+            </div>
+            <div class="gallery-item animate-slide-up" data-category="grill" onclick="openCarousel(5)">
+                <img src="GRILL6.jpg" alt="Sélection viandes premium" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Sélection Premium</div>
+                </div>
+            </div>
+
+            <!-- 6 IMAGES BAR -->
+            <div class="gallery-item animate-slide-up" data-category="bar" onclick="openCarousel(6)">
+                <img src="BAR1.jpg" alt="Cocktails créatifs" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Cocktails</div>
+                </div>
+            </div>
+            <div class="gallery-item animate-slide-up" data-category="bar" onclick="openCarousel(7)">
+                <img src="BAR2.jpg" alt="Bières fraîches" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Bières</div>
+                </div>
+            </div>
+            <div class="gallery-item animate-slide-up" data-category="bar" onclick="openCarousel(8)">
+                <img src="BAR3.jpg" alt="Mocktails sans alcool" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Mocktails</div>
+                </div>
+            </div>
+            <div class="gallery-item animate-slide-up" data-category="bar" onclick="openCarousel(9)">
+                <img src="BAR4.jpg" alt="Ambiance bar chaleureuse" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Ambiance Unique</div>
+                </div>
+            </div>
+            <div class="gallery-item animate-slide-up" data-category="bar" onclick="openCarousel(10)">
+                <img src="BAR5.jpg" alt="Créations cocktails exclusives" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Créations Exclusives</div>
+                </div>
+            </div>
+            <div class="gallery-item animate-slide-up" data-category="bar" onclick="openCarousel(11)">
+                <img src="BAR6.jpg" alt="Éclairage et décoration bar" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Liqueur de qualité</div>
+                </div>
+            </div>
+
+            <!-- Images des chambres (3 images) -->
+            <div class="gallery-item animate-slide-up" data-category="chambres" onclick="openCarousel(12)">
+                <img src="CHAMBRES1.jpg" alt="Chambre confort" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Confort</div>
+                </div>
+            </div>
+            <div class="gallery-item animate-slide-up" data-category="chambres" onclick="openCarousel(13)">
+                <img src="CHAMBRES2.jpg" alt="Suite" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Suite</div>
+                </div>
+            </div>
+            <div class="gallery-item animate-slide-up" data-category="chambres" onclick="openCarousel(14)">
+                <img src="CHAMBRES3.jpg" alt="Vue chambre" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Vue</div>
+                </div>
+            </div>
+
+            <!-- Images des événements (2 images) -->
+            <div class="gallery-item animate-slide-up" data-category="evenements" onclick="openCarousel(15)">
+                <img src="EVENT1.jpg" alt="Anniversaire" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Anniversaires</div>
+                </div>
+            </div>
+            <div class="gallery-item animate-slide-up" data-category="evenements" onclick="openCarousel(16)">
+                <img src="EVENT2.jpg" alt="Mariage" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Mariages</div>
+                </div>
+            </div>
+
+            <!-- Images des matchs (3 images) -->
+            <div class="gallery-item animate-slide-up" data-category="matchs" onclick="openCarousel(17)">
+                <img src="MATCH1.jpg" alt="Football" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Football</div>
+                </div>
+            </div>
+            <div class="gallery-item animate-slide-up" data-category="matchs" onclick="openCarousel(18)">
+                <img src="MATCH2.jpg" alt="Basket" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Basket</div>
+                </div>
+            </div>
+            <div class="gallery-item animate-slide-up" data-category="matchs" onclick="openCarousel(19)">
+                <img src="MATCH3.jpg" alt="Autres sports" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">Autres Sports</div>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+</section>
+
+    <!-- Carousel Modal Amélioré -->
+    <div class="carousel-modal" id="carouselModal">
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack">
+                <!-- Les éléments du carousel seront générés dynamiquement -->
+            </div>
+            <button class="carousel-nav carousel-prev" onclick="moveCarousel(-1)">‹</button>
+            <button class="carousel-nav carousel-next" onclick="moveCarousel(1)">›</button>
+            <button class="carousel-close" onclick="closeCarousel()">×</button>
+            <div class="carousel-counter" id="carouselCounter">1 / 14</div>
+            <div class="carousel-caption" id="carouselCaption"></div>
+        </div>
+    </div>
+
+    <!-- Section Réservation -->
+    <section id="reservation" class="section reservation">
+        <div class="container">
+            <header class="section-header animate-fade-in">
+                <h2 class="section-title">Réservation</h2>
+                <div class="separator"></div>
+                <p class="section-description">Réservez en 1 clic via WhatsApp</p>
+            </header>
+
+            <form id="reservation-form" class="reservation-form animate-slide-up">
+                <div class="form-grid">
+                    <!-- Nom -->
+                    <div class="form-group">
+                        <label for="name" class="form-label">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <input type="text" id="name" required placeholder=" ">
+                            <span class="placeholder">Votre nom complet</span>
+                        </label>
+                    </div>
+
+                    <!-- Date -->
+                    <div class="form-group">
+                        <label for="date" class="form-label">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <input type="date" id="date" required>
+                            <span class="placeholder">Date de réservation</span>
+                        </label>
+                    </div>
+
+                    <!-- Service -->
+                    <div class="form-group">
+                        <label for="service" class="form-label">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2a3 3 0 0 0-3 3v2H7v4h2v2H7v4h2v2a3 3 0 0 0 3 3h4a3 3 0 0 0 3-3v-2h2v-4h-2v-2h2V7h-2V5a3 3 0 0 0-3-3h-4z"></path>
+                            </svg>
+                            <select id="service" required>
+                                <option value="" disabled selected></option>
+                                <option value="grill">Grill & Restaurant</option>
+                                <option value="bar">Bar & Cocktails</option>
+                                <option value="chambres">Chambre</option>
+                                <option value="evenements">Événement Privé</option>
+                                <option value="matchs">Match en Direct</option>
+                            </select>
+                            <span class="placeholder">Type de service</span>
+                        </label>
+                    </div>
+
+                    <!-- Nombre de personnes -->
+                    <div class="form-group">
+                        <label for="guests" class="form-label">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            <select id="guests" required>
+                                <option value="" disabled selected></option>
+                                <option value="1">1 personne</option>
+                                <option value="2">2 personnes</option>
+                                <option value="3">3 personnes</option>
+                                <option value="4">4 personnes</option>
+                                <option value="5">5 personnes</option>
+                                <option value="6">6 personnes</option>
+                                <option value="7">7 personnes</option>
+                                <option value="8">8 personnes</option>
+                                <option value="+8">+8 personnes</option>
+                            </select>
+                            <span class="placeholder">Nombre de personnes</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Bouton WhatsApp -->
+                <button type="submit" class="btn-whatsapp">
+                    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.263c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                    </svg>
+                    <span>Réserver via WhatsApp</span>
+                </button>
+            </form>
+
+            <!-- Infos complémentaires -->
+            <div class="info-boxes animate-fade-in">
+                <div class="info-box">
+                    <h3>Horaires</h3>
+                    <p>Ouvert 7J/7 • 8h - 23h</p>
+                </div>
+                <div class="info-box">
+                    <h3>Contact</h3>
+                    <p><a href="tel:+22657401111">+226 57 40 11 11</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; color:white;">
+                <div class="footer-column">
+                    <h4>LA VIDA LOCA</h4>
+                    <p>Bar Grill • Ouaga 2000</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="tel:+22657401111">+226 57 40 11 11</a></li>
+                        <li><a href="mailto:contact@lavidaloca.com">contact@lavidaloca.com</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Suivez-nous</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://www.facebook.com/profile.php?id=100084978279488" target="_blank">Facebook</a></li>
+                        <li><a href="https://www.tiktok.com/@lavida_loca2000" target="_blank">TikTok</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 LA VIDA LOCA. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.querySelector('.navbar');
+            window.addEventListener('scroll', () => {
+                navbar.classList.toggle('scrolled', window.scrollY > 50);
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', e => {
+                    e.preventDefault();
+                    document.querySelector(anchor.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            menuToggle?.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.animate-fade-in, .animate-slide-up').forEach(el => observer.observe(el));
+
+            const form = document.getElementById('reservation-form');
+            form?.addEventListener('submit', e => {
+                e.preventDefault();
+                const name = document.getElementById('name').value.trim();
+                const dateInput = document.getElementById('date').value;
+                const service = document.getElementById('service').value;
+                const guests = document.getElementById('guests').value;
+
+                if (!name || !dateInput || !service || !guests) {
+                    alert('Veuillez remplir tous les champs.');
+                    return;
+                }
+
+                const date = new Date(dateInput);
+                const day = date.getDate();
+                const month = date.toLocaleString('fr-FR', { month: 'long' });
+                const year = date.getFullYear();
+
+                const message = `Bonjour, je m'appelle *${name}*.\nRéservation *${service}* le *${day} ${month} ${year}* pour *${guests}*.\nMerci !`;
+
+                window.open(`https://wa.me/22657401111?text=${encodeURIComponent(message)}`, '_blank');
+            });
+
+            // ===== FONCTIONNALITÉS AMÉLIORÉES POUR LA GALERIE =====
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            // Filtrage des images
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Retirer la classe active de tous les boutons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Ajouter la classe active au bouton cliqué
+                    button.classList.add('active');
+                    
+                    const filterValue = button.getAttribute('data-filter');
+                    
+                    galleryItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                            setTimeout(() => {
+                                item.style.opacity = '1';
+                                item.style.transform = 'scale(1)';
+                            }, 10);
+                        } else {
+                            item.style.opacity = '0';
+                            item.style.transform = 'scale(0.8)';
+                            setTimeout(() => {
+                                item.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+            
+            // Chargement de plus d'images
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            let currentItems = 14; // Nombre d'images initialement affichées
+            
+            loadMoreBtn.addEventListener('click', () => {
+                // Simuler le chargement de nouvelles images
+                // En production, vous récupéreriez ces images depuis une API ou une base de données
+                const newItems = [
+                    { src: 'VIDA_GAL4.jpg', category: 'bar', caption: 'Ambiance' },
+                    { src: 'VIDA_GAL5.jpg', category: 'grill', caption: 'Spécialités' },
+                    { src: 'VIDA_GAL6.jpg', category: 'chambres', caption: 'Détail' },
+                    { src: 'VIDA_GAL7.jpg', category: 'evenements', caption: 'Soirée' },
+                    { src: 'VIDA_GAL8.jpg', category: 'matchs', caption: 'Écran géant' }
+                ];
+                
+                newItems.forEach((item, index) => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item animate-slide-up';
+                    galleryItem.setAttribute('data-category', item.category);
+                    galleryItem.onclick = () => openCarousel(currentItems + index);
+                    
+                    galleryItem.innerHTML = `
+                        <img src="${item.src}" alt="${item.caption}" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">${item.caption}</div>
+                        </div>
+                    `;
+                    
+                    document.querySelector('.gallery-grid').appendChild(galleryItem);
+                    
+                    // Observer pour l'animation
+                    observer.observe(galleryItem);
+                });
+                
+                currentItems += newItems.length;
+                
+                // Masquer le bouton après quelques chargements (optionnel)
+                if (currentItems >= 20) {
+                    loadMoreBtn.style.display = 'none';
+                }
+            });
+            
+            // Carousel amélioré
+const carouselImages = [
+    // 6 images Grill (0-5)
+    { src: 'GRILL1.jpg', caption: 'Viandes Premium - Grillées à la perfection' },
+    { src: 'GRILL2.jpg', caption: 'Plats Signature - Saveurs uniques' },
+    { src: 'GRILL3.jpg', caption: 'Fraîcheur - Salades & Légumes' },
+    { src: 'GRILL4.jpg', caption: 'Spécialités Maison - Nos créations exclusives' },
+    { src: 'GRILL5.jpg', caption: 'Assiettes Gourmandes - Présentation raffinée' },
+    { src: 'GRILL6.jpg', caption: 'Sélection Premium - Viandes d\'exception' },
+    
+    // 6 images Bar (6-11)
+    { src: 'BAR1.jpg', caption: 'Cocktails - Créations originales' },
+    { src: 'BAR2.jpg', caption: 'Bières - Fraîches & Variées' },
+    { src: 'BAR3.jpg', caption: 'Mocktails - Sans alcool' },
+    { src: 'BAR4.jpg', caption: 'Ambiance Unique - Cadre chaleureux et moderne' },
+    { src: 'BAR5.jpg', caption: 'Créations Exclusives - Cocktails signature' },
+    { src: 'BAR6.jpg', caption: 'Lumière & Convivialité - Moment de détente' },
+    
+    // Autres images (12-19)
+    { src: 'CHAMBRES1.jpg', caption: 'Confort - Lit Queen Size' },
+    { src: 'CHAMBRES2.jpg', caption: 'Suite - Espace et élégance' },
+    { src: 'CHAMBRES3.jpg', caption: 'Vue - Détente garantie' },
+    { src: 'EVENT1.jpg', caption: 'Anniversaires - Fête inoubliable' },
+    { src: 'EVENT2.jpg', caption: 'Mariages - Romantisme garanti' },
+    { src: 'MATCH1.jpg', caption: 'Football - Ligues & Coupes' },
+    { src: 'MATCH2.jpg', caption: 'Basket - NBA & Local' },
+    { src: 'MATCH3.jpg', caption: 'Autres Sports - Boxe, Tennis...' }
+];
+            
+            let currentIndex = 0;
+            const track = document.getElementById('carouselTrack');
+            const counter = document.getElementById('carouselCounter');
+            const caption = document.getElementById('carouselCaption');
+            
+            // Initialiser le carousel
+            carouselImages.forEach((image, index) => {
+                const carouselItem = document.createElement('div');
+                carouselItem.className = 'carousel-item';
+                carouselItem.innerHTML = `<img src="${image.src}" alt="${image.caption}">`;
+                track.appendChild(carouselItem);
+            });
+            
+            window.openCarousel = idx => {
+                currentIndex = idx;
+                updateCarousel();
+                document.getElementById('carouselModal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
+            
+            window.closeCarousel = () => {
+                document.getElementById('carouselModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            };
+            
+            window.moveCarousel = dir => {
+                currentIndex = (currentIndex + dir + carouselImages.length) % carouselImages.length;
+                updateCarousel();
+            };
+            
+            const updateCarousel = () => {
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                counter.textContent = `${currentIndex + 1} / ${carouselImages.length}`;
+                caption.textContent = carouselImages[currentIndex].caption;
+            };
+            
+            document.addEventListener('keydown', e => {
+                if (document.getElementById('carouselModal').classList.contains('active')) {
+                    if (e.key === 'ArrowLeft') moveCarousel(-1);
+                    if (e.key === 'ArrowRight') moveCarousel(1);
+                    if (e.key === 'Escape') closeCarousel();
+                }
+            });
+            
+            // Swipe pour mobile
+            let startX = 0;
+            track.addEventListener('touchstart', e => {
+                startX = e.touches[0].clientX;
+            });
+            
+            track.addEventListener('touchend', e => {
+                const endX = e.changedTouches[0].clientX;
+                const diff = startX - endX;
+                
+                if (Math.abs(diff) > 50) { // Seuil de swipe
+                    if (diff > 0) {
+                        moveCarousel(1); // Swipe gauche -> image suivante
+                    } else {
+                        moveCarousel(-1); // Swipe droite -> image précédente
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
